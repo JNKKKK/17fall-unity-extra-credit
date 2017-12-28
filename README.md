@@ -1,5 +1,5 @@
 # Overview
-A unity program that can make up an image by humanoid agents with different colors
+A unity program that can make up an image by humanoid agents with different colors.
 
 # Screenshots
 use local image ```\Assets\ResourceImages\pi.jpg```
@@ -27,7 +27,8 @@ use online image http://image.coolapk.com/apk_logo/2016/0123/12202_1453560019_40
 # Platform
 
 Windows __only__
-Because I use `System.Drawing.dll` to process image files
+Because I use `System.Drawing.dll` to process image files.
 
 # Demo video
-Since the limited CPU performance of my laptop, the program in demo video runs with very low fps. Sorry about that.
+Since the limited CPU&GPU performance of my laptop, the program in demo video runs with very low fps. Sorry about that.
+https://youtu.be/agNqiJ-XNNM
