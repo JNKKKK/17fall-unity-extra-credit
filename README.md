@@ -18,6 +18,7 @@ use online image http://image.coolapk.com/apk_logo/2016/0123/12202_1453560019_40
 
 - local image as input
   - support BMP, GIF, JPEG, PNG, TIFF
+  - put yout image under ```\Assets\ResourceImages\```
 - online image as input
   - support BMP, GIF, JPEG, PNG, TIFF
   - some of __https__ site do __not__ work
