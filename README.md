@@ -25,15 +25,19 @@ with only __White__ enabled
 
 # Platform
 
-Windows __only__ . 
+Windows __only__
+
 Because `System.Drawing.dll` is used to process image files.
 
 # Demo video
 ~~https://youtu.be/agNqiJ-XNNM~~ (old)
 
 New videos:
+
 https://youtu.be/BPGp0lbsqj8 (6x fast forwarded)
+
 this video demostrates a transition from from __pi.jpg__ with __B&W&Color__ enables to the same image with __B&Color__ enabled.
 
 https://youtu.be/Ywzol6UeBLY (6x fast forwarded)
+
 this video demostrate a transition from a large, black and colored image to a very small, white and colored image with white and colored actors enabled.
