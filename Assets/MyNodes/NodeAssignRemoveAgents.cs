@@ -12,17 +12,18 @@ using TreeSharpPlus;
 namespace MyNodes
 {
     /// <summary>
-    /// Remove agents
+    /// Assign Remove agents
     /// 
     /// </summary>
     /// 
-    public class RemoveAgents : Node
+    public class AssignRemoveAgents : Node
     {
         protected List<GameObject> AgentPool;
         protected Bitmap image;
         protected int[,] matrix;
         protected UI uiScript;
-        public RemoveAgents(List<GameObject> AgentPool, UI uiScript)
+
+        public AssignRemoveAgents(List<GameObject> AgentPool, UI uiScript)
         {
             this.AgentPool = AgentPool;
             this.uiScript = uiScript;
@@ -59,8 +60,10 @@ namespace MyNodes
                 }
                 if (!keep)
                 {
-                    UnityEngine.Object.Destroy(this.AgentPool[i]);
-                    this.AgentPool.RemoveAt(i);
+                    UI.xy xy;
+                    xy = this.uiScript.randXY();
+                    this.AgentPool[i].GetComponent<AgentAssignment>().assignX = xy.x;
+                    this.AgentPool[i].GetComponent<AgentAssignment>().assignY = xy.y;
                 }
             }
             for (int i = this.AgentPool.Count - 1; i > -1; i--)
@@ -71,27 +74,30 @@ namespace MyNodes
                 {
                     if (color.r == 0 && color.g == 0 && color.b == 0)
                     {
-                        UnityEngine.Object.Destroy(this.AgentPool[i]);
-                        this.AgentPool.RemoveAt(i);
-                        continue;
+                        UI.xy xy;
+                        xy = this.uiScript.randXY();
+                        this.AgentPool[i].GetComponent<AgentAssignment>().assignX = xy.x;
+                        this.AgentPool[i].GetComponent<AgentAssignment>().assignY = xy.y;
                     }
                 }
                 if (!this.uiScript.ToggleWhite.GetComponent<UnityEngine.UI.Toggle>().isOn)
                 {
                     if (color.r == 1 && color.g == 1 && color.b == 1)
                     {
-                        UnityEngine.Object.Destroy(this.AgentPool[i]);
-                        this.AgentPool.RemoveAt(i);
-                        continue;
+                        UI.xy xy;
+                        xy = this.uiScript.randXY();
+                        this.AgentPool[i].GetComponent<AgentAssignment>().assignX = xy.x;
+                        this.AgentPool[i].GetComponent<AgentAssignment>().assignY = xy.y;
                     }
                 }
                 if (!this.uiScript.ToggleColors.GetComponent<UnityEngine.UI.Toggle>().isOn)
                 {
                     if ((color.r > 0 && color.r < 255) || (color.g > 0 && color.g < 255) || (color.b > 0 && color.b < 255))
                     {
-                        UnityEngine.Object.Destroy(this.AgentPool[i]);
-                        this.AgentPool.RemoveAt(i);
-                        continue;
+                        UI.xy xy;
+                        xy = this.uiScript.randXY();
+                        this.AgentPool[i].GetComponent<AgentAssignment>().assignX = xy.x;
+                        this.AgentPool[i].GetComponent<AgentAssignment>().assignY = xy.y;
                     }
                 }
             }

@@ -37,6 +37,8 @@ public class BehaviorTree : MonoBehaviour
             new Sequence(
                 new DecoratorForceStatus(RunStatus.Success, new DecoratorLoop(new LeafAssert(ifNotGoPressed))),
                 new LeafInvoke(invertGo),
+                new AssignRemoveAgents(AgentPool, gameObject.GetComponent<UI>()),
+                new MoveAgents(AgentPool),
                 new RemoveAgents(AgentPool, gameObject.GetComponent<UI>()),
                 new LeafWait(1000),
                 new SpawnAgents(AgentPool, AgentPrefab, gameObject.GetComponent<UI>()),

@@ -19,6 +19,9 @@ namespace MyNodes
     public class MoveAgents : Parallel
     {
         protected List<GameObject> AgentPool;
+        protected int lastCount = 0;
+        protected int timeout = 0;
+        protected int timeoutThreshold = 200;
 
         public MoveAgents(List<GameObject> AgentPool)
         {
@@ -53,6 +56,7 @@ namespace MyNodes
         {
             while (true)
             {
+                Debug.Log(this.runningChildren);
                 for (int i = 0; i < this.Children.Count; i++)
                 {
                     if (this.childStatus[i] == RunStatus.Running)
@@ -85,6 +89,24 @@ namespace MyNodes
                             }
                         }
                     }
+                }
+                if (this.runningChildren != this.lastCount)
+                {
+                    this.lastCount = this.runningChildren;
+                    this.timeout = 0;
+                }
+                else
+                {
+                    this.timeout++;
+                }
+                if ((this.timeout > this.timeoutThreshold) && (this.runningChildren < 100))
+                {
+                    Debug.Log("timeout");
+                    while (this.TerminateChildren() == RunStatus.Running)
+                        yield return RunStatus.Running;
+                    this.runningChildren = 0;
+                    yield return RunStatus.Success;
+                    yield break;
                 }
 
                 // If we're out of running nodes, we're done

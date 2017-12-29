@@ -13,8 +13,32 @@ public class UI : MonoBehaviour
     public UnityEngine.UI.Button goRemote, goLocal;
     public UnityEngine.UI.InputField textbox;
     public float GroundWidth = 40, GroundHeight = 20;
+    public float WorldWidth = 78, WorldHeight = 38;
+    public UnityEngine.UI.Toggle ToggleBlack, ToggleWhite, ToggleColors;
 
     private List<string> options;
+    private System.Random rnd = new System.Random();
+
+    public class xy
+    {
+        public int x, y;
+        public xy(int x, int y)
+        {
+            this.x = x;
+            this.y = y;
+        }
+    }
+
+    public xy randXY()
+    {
+        int x = 0, y = 0;
+        while ((x < (this.GroundWidth / 2 + 5)) && (x > -(this.GroundWidth / 2 + 5)) && (y > -(this.GroundHeight / 2 + 4)) && (y < (this.GroundHeight / 2 + 2)))
+        {
+            x = rnd.Next((int)-this.WorldWidth / 2, (int)this.WorldWidth / 2);
+            y = rnd.Next((int)-this.WorldHeight / 2, (int)this.WorldHeight / 2);
+        }
+        return new xy(x, y);
+    }
 
     void Start()
     {

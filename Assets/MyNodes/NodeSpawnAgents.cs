@@ -39,8 +39,8 @@ namespace MyNodes
         public override IEnumerable<RunStatus> Execute()
         {
             this.image = this.uiScript.image;
-            Debug.Log(this.image.Width);
-            Debug.Log(this.image.Height);
+            //Debug.Log(this.image.Width);
+            //Debug.Log(this.image.Height);
             Material[] mats;
             System.Drawing.Color sysColor;
             UnityEngine.Color unityColor;
@@ -59,10 +59,42 @@ namespace MyNodes
                     matrix[i, j] = 0;
                 }
             }
+            // filter not enabled color 
             for (int x = 0; x < image.Width; x++)
             {
                 for (int y = 0; y < image.Height; y++)
                 {
+                    System.Drawing.Color color;
+                    color = image.GetPixel(x, y);
+                    if (!this.uiScript.ToggleBlack.GetComponent<UnityEngine.UI.Toggle>().isOn)
+                    {
+                        if (color.R == 0 && color.G == 0 && color.B == 0)
+                        {
+                            matrix[x, y] = 1;
+                        }
+                    }
+                    if (!this.uiScript.ToggleWhite.GetComponent<UnityEngine.UI.Toggle>().isOn)
+                    {
+                        if (color.R == 255 && color.G == 255 && color.B == 255)
+                        {
+                            matrix[x, y] = 1;
+                        }
+                    }
+                    if (!this.uiScript.ToggleColors.GetComponent<UnityEngine.UI.Toggle>().isOn)
+                    {
+                        if ((color.R > 0 && color.R < 255) || (color.G > 0 && color.G < 255) || (color.B > 0 && color.B < 255))
+                        {
+                            matrix[x, y] = 1;
+                        }
+                    }
+                }
+            }
+            // filter exist agent color
+            for (int x = 0; x < image.Width; x++)
+            {
+                for (int y = 0; y < image.Height; y++)
+                {
+                    if (matrix[x, y] == 1) continue;
                     bool ifskip = false;
                     for (int i = 0; i < this.AgentPool.Count; i++)
                     {
@@ -94,13 +126,16 @@ namespace MyNodes
                     }
                 }
             }
+            //spawn agent
             for (int x = 0; x < image.Width; x++)
             {
                 for (int y = 0; y < image.Height; y++)
                 {
                     if (matrix[x, y] == 1) continue;
+                    UI.xy xy;
+                    xy = this.uiScript.randXY();
                     this.agent = (GameObject)UnityEngine.Object.Instantiate(this.AgentPrefab,
-                        new Vector3(rnd.Next((int)-GroundWidth / 2, (int)GroundWidth / 2), 0, rnd.Next((int)-GroundHeight / 2, (int)GroundHeight / 2)),
+                        new Vector3(xy.x, 0, xy.y),
                         Quaternion.identity);
                     //Assign new position
                     if (image.Width == this.GroundWidth)
@@ -142,6 +177,7 @@ namespace MyNodes
             yield return RunStatus.Success;
             yield break;
         }
+
         private bool SameColor(System.Drawing.Color sysColor, UnityEngine.Color unityColor)
         {
             if ((sysColor.R == Math.Round(unityColor.r * 255))
@@ -155,5 +191,6 @@ namespace MyNodes
                 return false;
             }
         }
+        
     }
 }
